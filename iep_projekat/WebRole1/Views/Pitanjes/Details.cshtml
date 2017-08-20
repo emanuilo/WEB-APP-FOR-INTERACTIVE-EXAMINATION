@@ -1,0 +1,83 @@
+﻿@model WebRole1.Models.Pitanje
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pitanje</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Kanal.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kanal.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naslov)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tekst)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tekst)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Slika)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Slika)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VrPravljenja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VrPravljenja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VrPoslZaklj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VrPoslZaklj)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zakljucano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zakljucano)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPit }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

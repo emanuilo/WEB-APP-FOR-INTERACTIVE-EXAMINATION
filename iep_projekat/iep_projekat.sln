@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "iep_projekat", "iep_projekat\iep_projekat.ccproj", "{33CA8FA9-5152-44FA-AF9C-A4550AE43F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebRole1", "WebRole1\WebRole1.csproj", "{CFD02ADD-6863-4F62-BD18-D074A2916F30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33CA8FA9-5152-44FA-AF9C-A4550AE43F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CA8FA9-5152-44FA-AF9C-A4550AE43F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CA8FA9-5152-44FA-AF9C-A4550AE43F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CA8FA9-5152-44FA-AF9C-A4550AE43F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFD02ADD-6863-4F62-BD18-D074A2916F30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD02ADD-6863-4F62-BD18-D074A2916F30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFD02ADD-6863-4F62-BD18-D074A2916F30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD02ADD-6863-4F62-BD18-D074A2916F30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
