@@ -7,10 +7,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Pitanjes", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Pitanje</h4>
         <hr />
@@ -35,25 +35,11 @@
             @Html.LabelFor(model => model.ImageToUpload, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.ImageToUpload, new { type = "file" })
+                @*<input name="upload" type="file" />*@
                 @*@Html.ValidationMessageFor(model => model.Slika, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.VrPravljenja, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VrPravljenja, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VrPravljenja, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.VrPoslZaklj, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.VrPoslZaklj, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.VrPoslZaklj, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Zakljucano, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -65,22 +51,29 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.IdKor, "IdKor", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            <p class="control-label col-md-2"><b>Ponudjeni odgovori</b></p>
             <div class="col-md-10">
-                @Html.DropDownList("IdKor", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdKor, "", new { @class = "text-danger" })
+                @{ int num = ViewBag.K; }
+                @for(int i = 0; i < num; i++)
+                {
+                    @Html.TextBox("ponudjeno" + i, null, htmlAttributes: new { @class = "form-control col-md-8" })  
+                    <div class="col-md-2">
+                        @if(i == 0)
+                        {
+                            @Html.RadioButton("radioPonudjeno", i, true)
+                        }
+                        else
+                        {
+                            @Html.RadioButton("radioPonudjeno", i)
+                        }
+                    </div>
+                    <br /> <br />
+                }
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdKan, "IdKan", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdKan", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdKan, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

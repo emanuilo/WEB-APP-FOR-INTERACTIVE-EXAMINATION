@@ -1,14 +1,15 @@
 ﻿@model WebRole1.Models.Pitanje
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "UnlockQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Question is locked!</h2>
 
+<h3>Do you want to unlock it for @ViewBag.M tokens?</h3>
 <div>
-    <h4>Pitanje</h4>
+    <h4>Question</h4>
     <hr />
     <dl class="dl-horizontal">
         @*<dt>
@@ -43,16 +44,13 @@
             @Html.DisplayFor(model => model.Tekst)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Slika)
-        </dt>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Slika)
+            </dt>
 
-        <dd>
-            @if (Model.Slika != null)
-            {
-                @HtmlHelpers.ShowImage(Model.Slika);
-            }
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Slika)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.VrPravljenja)
@@ -78,20 +76,15 @@
             @Html.DisplayFor(model => model.Zakljucano)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PonudjeniOdgs)
-        </dt>
-
-        @for(int i = 0; i < Convert.ToInt32(ViewBag.K); i++)
-        {
-            <dd>
-                @Html.DisplayFor(model => model.PonudjeniOdgs.Where(p => p.IdPit == model.IdPit).Where(p => p.RedniBr == i).FirstOrDefault().Sadrzaj)
-            </dd>
-        }
-
     </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Unlock" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPit }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
