@@ -69,8 +69,15 @@
             @Html.DisplayFor(modelItem => item.Zakljucano)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdPit }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdPit }) |
+            @if(item.Zakljucano == true)
+            {
+                @Html.ActionLink("Unlock", "Edit", new { id=item.IdPit }) 
+            }
+            else
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdPit }) 
+            }
+             | @Html.ActionLink("Details", "Details", new { id=item.IdPit }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.IdPit })
         </td>
     </tr>

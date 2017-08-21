@@ -28,13 +28,13 @@
                     }
                     else if (Session["uloga"] != null && Session["uloga"].ToString() == "student")
                     {
-                        <li>@Html.ActionLink("Tokeni", "Tokens", "Home")</li>
+                        <li>@Html.ActionLink("Tokens", "Tokens", "Home")</li>
 
                     }
                     else if (Session["uloga"] != null && Session["uloga"].ToString() == "profesor")
                     {
-                        <li>@Html.ActionLink("Tokeni", "Tokens", "Home")</li>
-                        <li>@Html.ActionLink("Pitanja", "Questions", "Home")</li>
+                        <li>@Html.ActionLink("Tokens", "Tokens", "Home")</li>
+                        <li>@Html.ActionLink("Questions", "Questions", "Home")</li>
 
                     }
                     else

@@ -1,0 +1,75 @@
+﻿@model WebRole1.Models.Kanal
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kanal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Korisnik.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VrOtvaranja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VrOtvaranja)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lozinka)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lozinka)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Otvoren)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Otvoren)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VrOgranicen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VrOgranicen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntervalTrajanja)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntervalTrajanja)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdKan }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

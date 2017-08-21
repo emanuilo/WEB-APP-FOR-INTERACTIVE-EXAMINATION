@@ -180,6 +180,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KanalsController.cs" />
     <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\NarudzbinasController.cs" />
     <Compile Include="Controllers\ParametrisController.cs" />
@@ -267,6 +268,11 @@
     <Content Include="Views\Pitanjes\Index.cshtml" />
     <Content Include="Views\Pitanjes\UnlockQuestion.cshtml" />
     <Content Include="Views\Pitanjes\NotEnoughTokens.cshtml" />
+    <Content Include="Views\Kanals\Create.cshtml" />
+    <Content Include="Views\Kanals\Delete.cshtml" />
+    <Content Include="Views\Kanals\Details.cshtml" />
+    <Content Include="Views\Kanals\Edit.cshtml" />
+    <Content Include="Views\Kanals\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

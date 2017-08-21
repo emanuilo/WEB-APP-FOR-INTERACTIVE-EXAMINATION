@@ -302,5 +302,10 @@ namespace WebRole1.Controllers
         {
             return RedirectToAction("Index", "Pitanjes");
         }
+
+        public ActionResult Channels()
+        {
+            return View("Index", "Kanals");
+        }
     }
 }

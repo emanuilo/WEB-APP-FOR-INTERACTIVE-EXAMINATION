@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebRole1.Models.Kanal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdKan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrOtvaranja)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Lozinka)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Otvoren)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrOgranicen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IntervalTrajanja)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrOtvaranja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lozinka)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Otvoren)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrOgranicen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IntervalTrajanja)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdKan }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdKan }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdKan })
+        </td>
+    </tr>
+}
+
+</table>

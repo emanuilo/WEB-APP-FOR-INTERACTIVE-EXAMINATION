@@ -114,6 +114,7 @@ namespace WebRole1.Controllers
             }
             ViewBag.IdKan = new SelectList(db.Kanals, "IdKan", "Naziv", pitanje.IdKan);
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", pitanje.IdKor);
+            //TODO edit ponudjenih odgovora
             return View(pitanje);
         }
 
