@@ -15,6 +15,7 @@ namespace WebRole1.Models
             Kanals = new HashSet<Kanal>();
             Odgovors = new HashSet<Odgovor>();
             Narudzbinas = new HashSet<Narudzbina>();
+            Pratis = new HashSet<Prati>();
             Pitanjes = new HashSet<Pitanje>();
         }
 
@@ -59,6 +60,9 @@ namespace WebRole1.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Narudzbina> Narudzbinas { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Prati> Pratis { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pitanje> Pitanjes { get; set; }

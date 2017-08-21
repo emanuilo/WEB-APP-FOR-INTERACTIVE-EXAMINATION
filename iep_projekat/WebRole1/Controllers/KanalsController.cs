@@ -17,9 +17,9 @@ namespace WebRole1.Controllers
         // GET: Kanals
         public ActionResult Index()
         {
-            string email = Session["email"].ToString();
-            Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+            Korisnik korisnik = getKorisnik();
             var kanals = db.Kanals.Where(p => p.IdKor == korisnik.IdKor).Include(k => k.Korisnik);
+
             return View(kanals.ToList());
         }
 
@@ -50,10 +50,17 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdKan,Naziv,VrOtvaranja,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja,IdKor")] Kanal kanal)
+        public ActionResult Create([Bind(Include = "IdKan,Naziv,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja")] Kanal kanal)
         {
             if (ModelState.IsValid)
             {
+                Korisnik korisnik = getKorisnik();
+
+                kanal.VrOtvaranja = DateTime.Now;
+                kanal.IdKor = korisnik.IdKor;
+                if (kanal.Zatvoren == true)
+                    kanal.VrZatvaranja = DateTime.Now;
+
                 db.Kanals.Add(kanal);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -84,7 +91,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdKan,Naziv,VrOtvaranja,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja,IdKor")] Kanal kanal)
+        public ActionResult Edit([Bind(Include = "IdKan,Naziv,VrOtvaranja,VrZatvaranja,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja,IdKor")] Kanal kanal)
         {
             if (ModelState.IsValid)
             {
@@ -129,6 +136,21 @@ namespace WebRole1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public Korisnik getKorisnik()
+        {
+            if(Session["email"] != null)
+            {
+                string email = Session["email"].ToString();
+                Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+
+                return korisnik;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

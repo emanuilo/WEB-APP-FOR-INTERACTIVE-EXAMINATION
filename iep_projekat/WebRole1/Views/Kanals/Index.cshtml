@@ -21,25 +21,31 @@
         <th>
             @Html.DisplayNameFor(model => model.VrOtvaranja)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrZatvaranja)
+        </th>
         @*<th>
             @Html.DisplayNameFor(model => model.Lozinka)
         </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Otvoren)
+            @Html.DisplayNameFor(model => model.Zatvoren)
         </th>
         <th>
+            Broj Prijavljenih
+        </th>
+        @*<th>
             @Html.DisplayNameFor(model => model.VrOgranicen)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IntervalTrajanja)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+            @Html.DisplayFor(modelItem => item.IdKan)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Naziv)
@@ -48,17 +54,23 @@
             @Html.DisplayFor(modelItem => item.VrOtvaranja)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.VrZatvaranja)
+        </td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Lozinka)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Zatvoren)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Otvoren)
+            @Html.DisplayFor(modelItem => item.Pratis.Count)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.VrOgranicen)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IntervalTrajanja)
-        </td>
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.IdKan }) |
             @Html.ActionLink("Details", "Details", new { id=item.IdKan }) |

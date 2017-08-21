@@ -305,7 +305,7 @@ namespace WebRole1.Controllers
 
         public ActionResult Channels()
         {
-            return View("Index", "Kanals");
+            return RedirectToAction("Index", "Kanals");
         }
     }
 }

@@ -47,6 +47,8 @@ namespace WebRole1.Models
 
         public virtual Kanal Kanal { get; set; }
 
+        public virtual Klon Klon { get; set; }
+
         public virtual Korisnik Korisnik { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
