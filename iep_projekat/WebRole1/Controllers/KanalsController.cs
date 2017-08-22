@@ -14,9 +14,27 @@ namespace WebRole1.Controllers
     {
         private baza db = new baza();
 
+        private void CloseChannels()
+        {
+            List<Kanal> kanals = db.Kanals.Where(p => p.VrOgranicen == true).Where(p => p.Status == "Otvoren").ToList();
+            foreach (var kanal in kanals)
+            {
+                TimeSpan minutesPast = DateTime.Now - kanal.VrOtvaranja;
+                if(minutesPast.TotalMinutes > kanal.IntervalTrajanja)
+                {
+                    kanal.VrZatvaranja = kanal.VrOtvaranja.AddMinutes((double)kanal.IntervalTrajanja);
+                    kanal.Status = "Zatvoren";
+
+                    db.Entry(kanal).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+        }
+
         // GET: Kanals
         public ActionResult Index()
         {
+            CloseChannels();
             Korisnik korisnik = getKorisnik();
             var kanals = db.Kanals.Where(p => p.IdKor == korisnik.IdKor).Include(k => k.Korisnik);
 
@@ -26,6 +44,7 @@ namespace WebRole1.Controllers
         // GET: Kanals/Details/5
         public ActionResult Details(int? id)
         {
+            CloseChannels();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -42,6 +61,7 @@ namespace WebRole1.Controllers
         public ActionResult Create()
         {
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime");
+            ViewBag.Status = new SelectList(new List<string>{ "Na cekanju", "Otvoren", "Zatvoren" });
             return View();
         }
 
@@ -50,7 +70,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdKan,Naziv,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja")] Kanal kanal)
+        public ActionResult Create([Bind(Include = "IdKan,Naziv,Lozinka,Status,VrOgranicen,IntervalTrajanja")] Kanal kanal)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +78,7 @@ namespace WebRole1.Controllers
 
                 kanal.VrOtvaranja = DateTime.Now;
                 kanal.IdKor = korisnik.IdKor;
-                if (kanal.Zatvoren == true)
+                if (kanal.Status == "Zatvoren")
                     kanal.VrZatvaranja = DateTime.Now;
 
                 db.Kanals.Add(kanal);
@@ -73,6 +93,7 @@ namespace WebRole1.Controllers
         // GET: Kanals/Edit/5
         public ActionResult Edit(int? id)
         {
+            CloseChannels();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,6 +104,7 @@ namespace WebRole1.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", kanal.IdKor);
+            ViewBag.Status = new SelectList(new List<string> { "Na cekanju", "Otvoren", "Zatvoren" }, kanal.Status);
             return View(kanal);
         }
 
@@ -91,7 +113,7 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdKan,Naziv,VrOtvaranja,VrZatvaranja,Lozinka,Otvoren,VrOgranicen,IntervalTrajanja,IdKor")] Kanal kanal)
+        public ActionResult Edit([Bind(Include = "IdKan,IdKor,Naziv,VrOtvaranja,VrZatvaranja,Lozinka,Status,VrOgranicen,IntervalTrajanja")] Kanal kanal)
         {
             if (ModelState.IsValid)
             {
@@ -106,6 +128,7 @@ namespace WebRole1.Controllers
         // GET: Kanals/Delete/5
         public ActionResult Delete(int? id)
         {
+            CloseChannels();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -152,5 +175,27 @@ namespace WebRole1.Controllers
                 return null;
             }
         }
+
+        public ActionResult PublishList(int id)
+        {
+            Korisnik korisnik = getKorisnik();
+            var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Where(p => p.Zakljucano == true).Include(p => p.Kanal).Include(p => p.Korisnik);
+            Kanal channel = db.Kanals.Find(id);
+            ViewBag.ChannelName = channel.Naziv;
+            ViewBag.ChannelId = id;
+            return View(pitanjes.ToList());
+        }
+
+        [HttpPost, ActionName("PublishList")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Publish(int id, int? IdPit)
+        {
+            //dohvati pitanje
+            //kloniraj dohvaceno pitanje
+            //objavi klon na kanalu
+
+            return RedirectToAction("PublishList");
+        }
+
     }
 }

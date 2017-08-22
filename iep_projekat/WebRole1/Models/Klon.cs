@@ -31,8 +31,13 @@ namespace WebRole1.Models
         public bool? Zakljucano { get; set; }
 
         [Key]
+        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdPit { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        public int IdKlo { get; set; }
 
         public virtual Pitanje Pitanje { get; set; }
     }

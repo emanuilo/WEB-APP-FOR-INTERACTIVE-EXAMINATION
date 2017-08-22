@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<WebRole1.Models.Kanal>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Channels";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Channels</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -24,21 +24,12 @@
         <th>
             @Html.DisplayNameFor(model => model.VrZatvaranja)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Lozinka)
-        </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Zatvoren)
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
             Broj Prijavljenih
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.VrOgranicen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IntervalTrajanja)
-        </th>*@
         <th></th>
     </tr>
 
@@ -56,25 +47,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.VrZatvaranja)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Lozinka)
-        </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Zatvoren)
+            @Html.DisplayFor(modelItem => item.Status)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Pratis.Count)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.VrOgranicen)
-        </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IntervalTrajanja)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdKan }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdKan }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdKan })
+            @if(item.Status == "Zatvoren")
+            {
+                @Html.DisplayName("Edit")
+            }
+            else
+            {
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdKan })
+            }
+             | @Html.ActionLink("Details", "Details", new { id = item.IdKan }) |
+            @Html.ActionLink("Publish", "PublishList", new { id=item.IdKan })
         </td>
     </tr>
 }

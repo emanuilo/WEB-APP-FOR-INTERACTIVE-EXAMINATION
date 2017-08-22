@@ -276,6 +276,7 @@
     <Content Include="Views\Kanals\Details.cshtml" />
     <Content Include="Views\Kanals\Edit.cshtml" />
     <Content Include="Views\Kanals\Index.cshtml" />
+    <Content Include="Views\Kanals\PublishList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -107,8 +107,9 @@ namespace WebRole1.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Pitanje>()
-                .HasOptional(e => e.Klon)
-                .WithRequired(e => e.Pitanje);
+                .HasMany(e => e.Klons)
+                .WithRequired(e => e.Pitanje)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Pitanje>()
                 .HasMany(e => e.Odgovors)

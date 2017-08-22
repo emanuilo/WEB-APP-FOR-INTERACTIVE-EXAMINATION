@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WebRole1.Models.Pitanje>
+
+@{
+    ViewBag.Title = "PublishList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Publish questions</h2>
+<h3>Channel: @ViewBag.ChannelId, @ViewBag.ChannelName</h3>
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.IdPit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrPravljenja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrPoslZaklj)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zakljucano)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naslov)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrPravljenja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrPoslZaklj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zakljucano)
+            </td>
+            <td>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <input id="IdPit" name="IdPit" type="hidden" value=@item.IdPit />
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Publish" class="btn btn-default" /> |
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

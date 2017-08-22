@@ -1,17 +1,17 @@
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Emulator config file set to E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] DiagnosticsStoreRootPath set to: C:\Users\emanu\AppData\Local\dftmp\Resources\a6df66d4-53b8-4bb3-bfd0-f9be3e34dca4
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Loading config file: E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Config file to read: E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Checking VM Type
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Emulator config file set to E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Extension set to Emulator Mode
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Reading XML configuration file
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Bypassing private config decryption
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Stopping the running plugin, if any
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] No DiagnosticsPlugin is running.
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Killing any DiagnosticsPlugin that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:52 PM] Killing any MonAgentHost that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:53 PM] Diagnostics plugin stopped successfully
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:36:53 PM] Resetting DiagnosticPlugin
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:38:03 PM] DiagnosticsPlugin launched successfully with new configuration
-DiagnosticsPluginLauncher.exe Information: 0 : [8/21/2017 10:38:03 PM] DiagnosticPlugin exited with code 0
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Emulator config file set to E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] DiagnosticsStoreRootPath set to: C:\Users\emanu\AppData\Local\dftmp\Resources\ff6b8983-652e-4182-8c14-5da57e42175b
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Loading config file: E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Config file to read: E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Emulator config file set to E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\csx\Debug\roles\WebRole1\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:54 PM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:55 PM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:55 PM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:14:55 PM] Resetting DiagnosticPlugin
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:16:05 PM] DiagnosticsPlugin launched successfully with new configuration
+DiagnosticsPluginLauncher.exe Information: 0 : [8/22/2017 6:16:05 PM] DiagnosticPlugin exited with code 0

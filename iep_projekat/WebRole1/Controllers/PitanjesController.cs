@@ -14,11 +14,25 @@ namespace WebRole1.Controllers
     {
         private baza db = new baza();
 
+        public Korisnik getKorisnik()
+        {
+            if (Session["email"] != null)
+            {
+                string email = Session["email"].ToString();
+                Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+
+                return korisnik;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         // GET: Pitanjes
         public ActionResult Index()
         {
-            string email = Session["email"].ToString();
-            Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+            Korisnik korisnik = getKorisnik();
             var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Include(p => p.Kanal).Include(p => p.Korisnik);
             return View(pitanjes.ToList());
         }
@@ -58,8 +72,7 @@ namespace WebRole1.Controllers
         {
             if (ModelState.IsValid)
             {
-                string email = Session["email"].ToString();
-                Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+                Korisnik korisnik = getKorisnik();
                 int K = (int)db.Parametris.FirstOrDefault<Parametri>().K;
 
                 // Convert HttpPostedFileBase to byte array.
@@ -187,8 +200,7 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UnlockConfirmation(int id)
         {
-            string email = Session["email"].ToString();
-            Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+            Korisnik korisnik = getKorisnik();
             Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
             Pitanje pitanje = db.Pitanjes.Find(id);
 
@@ -212,5 +224,7 @@ namespace WebRole1.Controllers
         {
             return View();
         }
+
+        
     }
 }

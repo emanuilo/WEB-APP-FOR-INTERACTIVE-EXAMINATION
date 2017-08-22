@@ -34,7 +34,7 @@ namespace WebRole1.Models
         [StringLength(50)]
         public string Lozinka { get; set; }
 
-        public bool Zatvoren { get; set; }
+        public string Status { get; set; }
 
         [Display(Name = "Vremenski Ogranicen")]
         public bool VrOgranicen { get; set; }

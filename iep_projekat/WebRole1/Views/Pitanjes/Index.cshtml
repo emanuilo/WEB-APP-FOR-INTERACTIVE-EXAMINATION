@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<WebRole1.Models.Pitanje>
 
 @{
-    ViewBag.Title = "Pitanja";
+    ViewBag.Title = "Questions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Pitanja</h2>
+<h2>Questions</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -78,7 +78,6 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.IdPit }) 
             }
              | @Html.ActionLink("Details", "Details", new { id=item.IdPit }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdPit })
         </td>
     </tr>
 }
