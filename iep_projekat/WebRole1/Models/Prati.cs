@@ -19,7 +19,7 @@ namespace WebRole1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdKan { get; set; }
 
-        public DateTime? VrPracenja { get; set; }
+        public bool Evaluacija { get; set; }
 
         public virtual Kanal Kanal { get; set; }
 

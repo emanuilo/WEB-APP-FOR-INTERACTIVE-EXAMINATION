@@ -86,6 +86,7 @@ namespace WebRole1.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Status = new SelectList(new List<string>{ "Na cekanju", "Otvoren", "Zatvoren" });
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", kanal.IdKor);
             return View(kanal);
         }
@@ -179,7 +180,7 @@ namespace WebRole1.Controllers
         public ActionResult PublishList(int id)
         {
             Korisnik korisnik = getKorisnik();
-            var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Where(p => p.Zakljucano == true).Include(p => p.Kanal).Include(p => p.Korisnik);
+            var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Where(p => p.Zakljucano == true).Include(p => p.Korisnik);
             Kanal channel = db.Kanals.Find(id);
             ViewBag.ChannelName = channel.Naziv;
             ViewBag.ChannelId = id;
@@ -190,12 +191,93 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Publish(int id, int? IdPit)
         {
-            //dohvati pitanje
-            //kloniraj dohvaceno pitanje
-            //objavi klon na kanalu
+            Pitanje pitanje = db.Pitanjes.Find(IdPit);
+            Klon klon = new Klon();
 
+            klon.IdPit = pitanje.IdPit;
+            klon.Naslov = pitanje.Naslov;
+            klon.Tekst = pitanje.Tekst;
+            klon.Slika = pitanje.Slika;
+            klon.ImageToUpload = pitanje.ImageToUpload;
+            klon.VrPravljenja = pitanje.VrPravljenja;
+            klon.VrPoslZaklj = pitanje.VrPoslZaklj;
+            klon.Zakljucano = pitanje.Zakljucano;
+            klon.IdKan = id;
+
+            db.Klons.Add(klon);
+            db.SaveChanges();
+
+            var ponudjeniOdgs = db.PonudjeniOdgs.Where(p => p.IdPit == pitanje.IdPit).ToList();
+            foreach (var ponudjeni in ponudjeniOdgs)
+            {
+                KlonPonudjeniOdg klonPonudjeni = new KlonPonudjeniOdg();
+                klonPonudjeni.Sadrzaj = ponudjeni.Sadrzaj;
+                klonPonudjeni.RedniBr = ponudjeni.RedniBr;
+                klonPonudjeni.Tacan = ponudjeni.Tacan;
+                klonPonudjeni.IdKlo = klon.IdKlo;
+
+                db.KlonPonudjeniOdgs.Add(klonPonudjeni);
+            }
+
+            db.SaveChanges();
             return RedirectToAction("PublishList");
         }
 
+        public ActionResult PublishedQuestions(int idKan)
+        {
+            var klones = db.Klons.Where(p => p.IdKan == idKan);
+            return View(klones.ToList());
+        }
+
+        public ActionResult ChannelsStudent()
+        {
+            var kanals = db.Kanals.Where(p => p.Status == "Otvoren");
+            ViewBag.IdKor = getKorisnik().IdKor;
+            return View(kanals.ToList());
+        }
+
+        public ActionResult Subscribe(int idKan)
+        {
+            Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
+            ViewBag.E = parametri.E;
+            ViewBag.ChannelName = db.Kanals.Find(idKan).Naziv;
+            return View();
+        }
+
+        [HttpPost, ActionName("Subscribe")]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubsribeConfirmation(int idKan, string Lozinka, bool Evaluation)
+        {
+            //TODO nakon pretplacivanja, subscribe dugme postane disabled!
+            //TODO ??? posebna strana za mySubscriptions
+            Kanal kanal = db.Kanals.Find(idKan);
+            Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
+            if(Lozinka != kanal.Lozinka)
+            {
+                ModelState.AddModelError(string.Empty, "Pogresna lozinka!");
+                ViewBag.E = parametri.E;
+                ViewBag.ChannelName = kanal.Naziv;
+                return View();
+            }
+
+            Korisnik korisnik = getKorisnik();
+            if (Evaluation == true && korisnik.BrTokena < parametri.E)
+            {
+                ModelState.AddModelError(string.Empty, "Nedovoljno tokena!");
+                ViewBag.E = parametri.E;
+                ViewBag.ChannelName = kanal.Naziv;
+                return View();
+            }
+
+            Prati prati = new Prati();
+            prati.IdKan = idKan;
+            prati.IdKor = korisnik.IdKor;
+            prati.Evaluacija = Evaluation;
+
+            db.Pratis.Add(prati);
+            db.SaveChanges();
+
+            return RedirectToAction("ChannelsStudent");
+        }
     }
 }

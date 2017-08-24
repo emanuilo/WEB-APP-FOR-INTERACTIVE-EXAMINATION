@@ -192,6 +192,7 @@
     <Compile Include="Models\baza.cs" />
     <Compile Include="Models\Kanal.cs" />
     <Compile Include="Models\Klon.cs" />
+    <Compile Include="Models\KlonPonudjeniOdg.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Narudzbina.cs" />
     <Compile Include="Models\Odgovor.cs" />
@@ -277,6 +278,10 @@
     <Content Include="Views\Kanals\Edit.cshtml" />
     <Content Include="Views\Kanals\Index.cshtml" />
     <Content Include="Views\Kanals\PublishList.cshtml" />
+    <Content Include="Views\Kanals\PublishedQuestions.cshtml" />
+    <Content Include="Views\Kanals\ChannelsStudent.cshtml" />
+    <Content Include="Views\Kanals\Subscribe.cshtml" />
+    <Content Include="Views\Home\Blackboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

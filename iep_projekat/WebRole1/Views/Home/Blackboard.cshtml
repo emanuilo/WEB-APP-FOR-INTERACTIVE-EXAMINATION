@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebRole1.Models.Klon>
+
+@{
+    ViewBag.Title = "Blackboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Blackboard</h2>
+<br />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4" style="padding: 0px">
+            <div class="box">
+                <h4>@item.Naslov</h4>
+                <br />
+                <p>
+                    @item.Tekst
+                </p>
+                <div class="ponudjeni">
+                    <ol>
+                        @for (int i = 0; i < Convert.ToInt32(ViewBag.K); i++)
+                        {
+                            <li>
+                                @item.KlonPonudjeniOdgs.Where(p => p.RedniBr == i).FirstOrDefault().Sadrzaj
+                            </li>
+                        }
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+<style media="screen" type="text/css">
+    .box p {
+        word-wrap: break-word;
+    }
+    .box h4 {
+        text-align: center
+    }
+    .box {
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        border: 3px solid lightgrey;
+        border-radius: 15px;
+        height: 300px;
+        margin: 2px;
+    }
+    .ponudjeni {
+        padding-top: 25px;
+        /*padding-left: 40px;
+        padding-right: 30px;*/
+        font-size: 14px;
+    }
+
+</style>

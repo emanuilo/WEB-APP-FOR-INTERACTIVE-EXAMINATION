@@ -33,7 +33,7 @@ namespace WebRole1.Controllers
         public ActionResult Index()
         {
             Korisnik korisnik = getKorisnik();
-            var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Include(p => p.Kanal).Include(p => p.Korisnik);
+            var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Include(p => p.Korisnik);
             return View(pitanjes.ToList());
         }
 
@@ -104,7 +104,6 @@ namespace WebRole1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdKan = new SelectList(db.Kanals, "IdKan", "Naziv", pitanje.IdKan);
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", pitanje.IdKor);
             return View(pitanje);
         }
@@ -125,7 +124,6 @@ namespace WebRole1.Controllers
             {
                 return RedirectToAction("UnlockQuestion", new { id = id });
             }
-            ViewBag.IdKan = new SelectList(db.Kanals, "IdKan", "Naziv", pitanje.IdKan);
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", pitanje.IdKor);
             //TODO edit ponudjenih odgovora
             return View(pitanje);
@@ -148,7 +146,6 @@ namespace WebRole1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdKan = new SelectList(db.Kanals, "IdKan", "Naziv", pitanje.IdKan);
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", pitanje.IdKor);
             return View(pitanje);
         }

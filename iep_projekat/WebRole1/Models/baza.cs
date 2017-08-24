@@ -14,6 +14,7 @@ namespace WebRole1.Models
 
         public virtual DbSet<Kanal> Kanals { get; set; }
         public virtual DbSet<Klon> Klons { get; set; }
+        public virtual DbSet<KlonPonudjeniOdg> KlonPonudjeniOdgs { get; set; }
         public virtual DbSet<Korisnik> Korisniks { get; set; }
         public virtual DbSet<Narudzbina> Narudzbinas { get; set; }
         public virtual DbSet<Odgovor> Odgovors { get; set; }
@@ -33,6 +34,15 @@ namespace WebRole1.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Kanal>()
+                .Property(e => e.Status)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Kanal>()
+                .HasMany(e => e.Pratis)
+                .WithRequired(e => e.Kanal)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Kanal>()
                 .HasMany(e => e.Odgovors)
                 .WithRequired(e => e.Kanal)
                 .WillCascadeOnDelete(false);
@@ -44,6 +54,25 @@ namespace WebRole1.Models
             modelBuilder.Entity<Klon>()
                 .Property(e => e.Tekst)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Klon>()
+                .HasMany(e => e.Odgovors)
+                .WithRequired(e => e.Klon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Klon>()
+                .HasMany(e => e.KlonPonudjeniOdgs)
+                .WithRequired(e => e.Klon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<KlonPonudjeniOdg>()
+                .Property(e => e.Sadrzaj)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<KlonPonudjeniOdg>()
+                .HasMany(e => e.Odgovors)
+                .WithRequired(e => e.KlonPonudjeniOdg)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Korisnik>()
                 .Property(e => e.Ime)
@@ -75,17 +104,17 @@ namespace WebRole1.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Korisnik>()
-                .HasMany(e => e.Odgovors)
-                .WithRequired(e => e.Korisnik)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Korisnik>()
                 .HasMany(e => e.Narudzbinas)
                 .WithRequired(e => e.Korisnik)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Korisnik>()
                 .HasMany(e => e.Pratis)
+                .WithRequired(e => e.Korisnik)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Korisnik>()
+                .HasMany(e => e.Odgovors)
                 .WithRequired(e => e.Korisnik)
                 .WillCascadeOnDelete(false);
 
@@ -112,11 +141,6 @@ namespace WebRole1.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Pitanje>()
-                .HasMany(e => e.Odgovors)
-                .WithRequired(e => e.Pitanje)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Pitanje>()
                 .HasMany(e => e.PonudjeniOdgs)
                 .WithRequired(e => e.Pitanje)
                 .WillCascadeOnDelete(false);
@@ -124,11 +148,6 @@ namespace WebRole1.Models
             modelBuilder.Entity<PonudjeniOdg>()
                 .Property(e => e.Sadrzaj)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<PonudjeniOdg>()
-                .HasMany(e => e.Odgovors)
-                .WithRequired(e => e.PonudjeniOdg)
-                .WillCascadeOnDelete(false);
         }
     }
 }

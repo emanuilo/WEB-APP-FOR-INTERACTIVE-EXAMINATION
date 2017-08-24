@@ -12,7 +12,7 @@ namespace WebRole1.Models
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int IdPit { get; set; }
+        public int IdKlo { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -23,14 +23,14 @@ namespace WebRole1.Models
 
         public int IdKan { get; set; }
 
-        public int IdPon { get; set; }
+        public int IdKPO { get; set; }
 
         public virtual Kanal Kanal { get; set; }
 
         public virtual Korisnik Korisnik { get; set; }
 
-        public virtual Pitanje Pitanje { get; set; }
+        public virtual Klon Klon { get; set; }
 
-        public virtual PonudjeniOdg PonudjeniOdg { get; set; }
+        public virtual KlonPonudjeniOdg KlonPonudjeniOdg { get; set; }
     }
 }

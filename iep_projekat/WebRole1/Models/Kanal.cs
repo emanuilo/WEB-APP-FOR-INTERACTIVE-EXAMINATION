@@ -12,9 +12,9 @@ namespace WebRole1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Kanal()
         {
-            Pitanjes = new HashSet<Pitanje>();
             Odgovors = new HashSet<Odgovor>();
             Pratis = new HashSet<Prati>();
+            Klons = new HashSet<Klon>();
         }
 
         [Key]
@@ -46,12 +46,12 @@ namespace WebRole1.Models
         public virtual Korisnik Korisnik { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pitanje> Pitanjes { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Odgovor> Odgovors { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Prati> Pratis { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Klon> Klons { get; set; }
     }
 }

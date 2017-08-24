@@ -10,6 +10,13 @@ namespace WebRole1.Models
     [Table("Klon")]
     public partial class Klon
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Klon()
+        {
+            Odgovors = new HashSet<Odgovor>();
+            KlonPonudjeniOdgs = new HashSet<KlonPonudjeniOdg>();
+        }
+
         [Required]
         [StringLength(80)]
         public string Naslov { get; set; }
@@ -28,17 +35,23 @@ namespace WebRole1.Models
         [Display(Name = "Vreme Zakljucavanja")]
         public DateTime? VrPoslZaklj { get; set; }
 
-        public bool? Zakljucano { get; set; }
+        public bool Zakljucano { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdPit { get; set; }
 
         [Key]
-        [Column(Order = 1)]
         public int IdKlo { get; set; }
 
+        public int? IdKan { get; set; }
+
+        public virtual Kanal Kanal { get; set; }
+
         public virtual Pitanje Pitanje { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Odgovor> Odgovors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KlonPonudjeniOdg> KlonPonudjeniOdgs { get; set; }
     }
 }

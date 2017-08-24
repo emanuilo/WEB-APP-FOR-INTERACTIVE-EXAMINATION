@@ -29,6 +29,9 @@
                     else if (Session["uloga"] != null && Session["uloga"].ToString() == "student")
                     {
                         <li>@Html.ActionLink("Tokens", "Tokens", "Home")</li>
+                        <li>@Html.ActionLink("Channels", "ChannelsStudent", "Kanals")</li>
+                        <li>@Html.ActionLink("Blackboard", "Blackboard", "Home")</li>
+
 
                     }
                     else if (Session["uloga"] != null && Session["uloga"].ToString() == "profesor")

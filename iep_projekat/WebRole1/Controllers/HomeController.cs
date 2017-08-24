@@ -12,6 +12,26 @@ namespace WebRole1.Controllers
 {
     public class HomeController : Controller
     {
+        private baza db1 = new baza();
+
+        public Korisnik getKorisnik()
+        {
+            if (Session["email"] != null)
+            {
+                using (baza db = new baza())
+                {
+                    string email = Session["email"].ToString();
+                    Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
+
+                    return korisnik;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -36,6 +56,45 @@ namespace WebRole1.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login([Bind(Include = "Email,Lozinka")] Korisnik korisnik)
+        {
+           using (baza db = new baza())
+            {
+                //var query = db.Korisniks.Where(a => a.Email.Equals(korisnik.Email)).Where(a => a.Lozinka.Equals(korisnik.Lozinka));
+                var query = db.Korisniks.Where(a => a.Email.Equals(korisnik.Email));
+                var user = query.FirstOrDefault<Korisnik>();
+
+                if(user != null)
+                {
+                    PasswordHasher hasher = new PasswordHasher();
+                    if(user.Status.ToString() == "neaktivan")
+                    {
+                        ModelState.AddModelError(string.Empty, "Nalog nije aktiviran");
+                    }
+                    else if(hasher.VerifyHashedPassword(user.Lozinka, korisnik.Lozinka) == PasswordVerificationResult.Success)
+                    {
+                        Session["email"] = user.Email.ToString();
+                        Session["ime"] = user.Ime.ToString();
+                        Session["uloga"] = user.Uloga.ToString();
+                        return RedirectToAction("index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Pogresna lozinka");
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Pogresan e-mail");
+                }
+            }
+
+            return View(korisnik);
         }
 
         public ActionResult Register()
@@ -85,45 +144,6 @@ namespace WebRole1.Controllers
                         throw raise;
                     }
 
-                }
-            }
-
-            return View(korisnik);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "Email,Lozinka")] Korisnik korisnik)
-        {
-           using (baza db = new baza())
-            {
-                //var query = db.Korisniks.Where(a => a.Email.Equals(korisnik.Email)).Where(a => a.Lozinka.Equals(korisnik.Lozinka));
-                var query = db.Korisniks.Where(a => a.Email.Equals(korisnik.Email));
-                var user = query.FirstOrDefault<Korisnik>();
-
-                if(user != null)
-                {
-                    PasswordHasher hasher = new PasswordHasher();
-                    if(user.Status.ToString() == "neaktivan")
-                    {
-                        ModelState.AddModelError(string.Empty, "Nalog nije aktiviran");
-                    }
-                    else if(hasher.VerifyHashedPassword(user.Lozinka, korisnik.Lozinka) == PasswordVerificationResult.Success)
-                    {
-                        Session["email"] = user.Email.ToString();
-                        Session["ime"] = user.Ime.ToString();
-                        Session["uloga"] = user.Uloga.ToString();
-                        return RedirectToAction("index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Pogresna lozinka");
-                    }
-
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Pogresan e-mail");
                 }
             }
 
@@ -306,6 +326,17 @@ namespace WebRole1.Controllers
         public ActionResult Channels()
         {
             return RedirectToAction("Index", "Kanals");
+        }
+
+        public ActionResult Blackboard()
+        {
+           
+            Korisnik korisnik = getKorisnik();
+            Parametri parametri = db1.Parametris.FirstOrDefault<Parametri>();
+            ViewBag.K = parametri.K;
+            var klones = db1.Klons.SqlQuery("select kl.* from Klon kl, Kanal ka, Prati p where kl.IdKan = ka.IdKan and p.IdKan = ka.IdKan and p.IdKor =" + korisnik.IdKor + " and kl.IdKlo not in (select IdKlo from Odgovor where IdKor =" + korisnik.IdKor + ")").ToList();
+            
+            return View(klones);
         }
     }
 }
