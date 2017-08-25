@@ -124,3 +124,14 @@ E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.Identi
 E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.Identity.Core.xml
 E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\obj\Debug\WebRole1.csprojResolveAssemblyReference.cache
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.SignalR.Core.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.Security.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Owin.dll
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.SignalR.Core.xml
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.xml
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\Faks\III\III-2-IEP\Projekat\iep_projekat\WebRole1\bin\Microsoft.Owin.Security.xml

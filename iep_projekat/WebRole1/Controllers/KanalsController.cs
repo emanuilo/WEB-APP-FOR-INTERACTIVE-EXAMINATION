@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebRole1.Hubs;
 using WebRole1.Models;
 
 namespace WebRole1.Controllers
@@ -184,6 +186,7 @@ namespace WebRole1.Controllers
             Kanal channel = db.Kanals.Find(id);
             ViewBag.ChannelName = channel.Naziv;
             ViewBag.ChannelId = id;
+            ViewBag.UserId = korisnik.IdKor;
             return View(pitanjes.ToList());
         }
 
@@ -193,7 +196,7 @@ namespace WebRole1.Controllers
         {
             Pitanje pitanje = db.Pitanjes.Find(IdPit);
             Klon klon = new Klon();
-
+            
             klon.IdPit = pitanje.IdPit;
             klon.Naslov = pitanje.Naslov;
             klon.Tekst = pitanje.Tekst;
@@ -208,6 +211,7 @@ namespace WebRole1.Controllers
             db.SaveChanges();
 
             var ponudjeniOdgs = db.PonudjeniOdgs.Where(p => p.IdPit == pitanje.IdPit).ToList();
+            string stringPonudjeni = "";
             foreach (var ponudjeni in ponudjeniOdgs)
             {
                 KlonPonudjeniOdg klonPonudjeni = new KlonPonudjeniOdg();
@@ -215,11 +219,16 @@ namespace WebRole1.Controllers
                 klonPonudjeni.RedniBr = ponudjeni.RedniBr;
                 klonPonudjeni.Tacan = ponudjeni.Tacan;
                 klonPonudjeni.IdKlo = klon.IdKlo;
-
+                stringPonudjeni += klonPonudjeni.Sadrzaj + ";";
                 db.KlonPonudjeniOdgs.Add(klonPonudjeni);
             }
 
             db.SaveChanges();
+
+            //SignalR
+            var context = GlobalHost.ConnectionManager.GetHubContext<PushHub>();
+            context.Clients.Group("Channel " + id).addNewQuestion(klon.Naslov, klon.Tekst, stringPonudjeni, klon.IdKlo);
+
             return RedirectToAction("PublishList");
         }
 

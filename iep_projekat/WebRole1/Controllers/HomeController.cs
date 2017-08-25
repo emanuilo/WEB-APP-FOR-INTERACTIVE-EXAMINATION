@@ -330,13 +330,19 @@ namespace WebRole1.Controllers
 
         public ActionResult Blackboard()
         {
-           
+            //TODO da se vidi iz kog kanala je pitanje
             Korisnik korisnik = getKorisnik();
             Parametri parametri = db1.Parametris.FirstOrDefault<Parametri>();
             ViewBag.K = parametri.K;
+            ViewBag.UserId = korisnik.IdKor;
             var klones = db1.Klons.SqlQuery("select kl.* from Klon kl, Kanal ka, Prati p where kl.IdKan = ka.IdKan and p.IdKan = ka.IdKan and p.IdKor =" + korisnik.IdKor + " and kl.IdKlo not in (select IdKlo from Odgovor where IdKor =" + korisnik.IdKor + ")").ToList();
             
             return View(klones);
+        }
+
+        public ActionResult Chat()
+        {
+            return View();
         }
     }
 }
