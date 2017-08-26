@@ -12,7 +12,7 @@
     @foreach (var item in Model)
     {
         <div class="col-md-4" style="padding: 0px">
-            <div class="box" id="pit @item.IdKlo">
+            <div class="box" id="pit_@item.IdKlo">
                 <h4>@item.Naslov</h4>
                 <br />
                 <p>
@@ -28,6 +28,7 @@
                         }
                     </ol>
                 </div>
+                <div class="footer">@item.Kanal.Naziv</div>
             </div>
         </div>
     }
@@ -38,25 +39,35 @@
     .box p {
         word-wrap: break-word;
     }
+
     .box h4 {
         text-align: center
     }
+
     .box {
         padding-top: 10px;
         padding-left: 15px;
         padding-right: 15px;
-        border: 3px solid lightgrey;
+        border: 3px solid silver;
         border-radius: 15px;
         height: 300px;
         margin: 2px;
         cursor: pointer;
     }
+
     .ponudjeni {
         padding-top: 25px;
         /*padding-left: 40px;
         padding-right: 30px;*/
         font-size: 12px;
         word-wrap: break-word;
+    }
+
+    .footer {
+        font-size: 10px;
+        position: absolute;
+        bottom: 10px;
+        left: 12px;
     }
 
 </style>
@@ -86,7 +97,7 @@
                 for (var i in odgovori) {
                     htmlOdgovori += "<li> " + odgovori[i] + "</li>";
                 }
-                $('#boxes').prepend('<div class="col-md-4" style="padding: 0px"> <div class="box" id="pit "' + idPit + '"> <h4>' + htmlEncode(naslov) + '</h4> <br/> <p>' + htmlEncode(tekst) + '</p><div class="ponudjeni" ><ol>' + htmlOdgovori + '</ol></div></div></div>');
+                $('#boxes').prepend('<div class="col-md-4" style="padding: 0px"> <div class="box" id="pit_' + idPit + '" onclick="dodato('+idPit+')"> <h4>' + htmlEncode(naslov) + '</h4> <br/> <p>' + htmlEncode(tekst) + '</p><div class="ponudjeni" ><ol>' + htmlOdgovori + '</ol></div></div></div>');
                 
             };
 
@@ -97,13 +108,22 @@
             return encodedValue;
         }
 
-        $('[id^="dugme"').click(function () {
-            // Call the Send method on the hub.
-            //setTimeout(function () {
-            //    push.server.send($('#IdKan').val());
-            //}, 200);
-            //push.server.send($('#IdKan').val());
+        $('[id^="pit"').on('click', function (event) {
+            var id = event.currentTarget.id.toString();
+            id = id.substring(4, id.length);
+            window.location.href = '/Klons/Details/' + id;
 
         });
+
+        //$('[id^="pit"').click(function (event) {
+        //    var id = event.currentTarget.id.toString();
+        //    id = id.substring(4, id.length);
+        //    window.location.href = '/Klons/Details/' + id; 
+
+        //});
+        function dodato(idPit) {
+            window.location.href = '/Klons/Details/' + idPit;
+
+        }
     </script>
 }

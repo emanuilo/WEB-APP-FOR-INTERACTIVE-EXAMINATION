@@ -22,7 +22,7 @@ namespace WebRole1.Controllers
             foreach (var kanal in kanals)
             {
                 TimeSpan minutesPast = DateTime.Now - kanal.VrOtvaranja;
-                if(minutesPast.TotalMinutes > kanal.IntervalTrajanja)
+                if (minutesPast.TotalMinutes > kanal.IntervalTrajanja)
                 {
                     kanal.VrZatvaranja = kanal.VrOtvaranja.AddMinutes((double)kanal.IntervalTrajanja);
                     kanal.Status = "Zatvoren";
@@ -36,6 +36,11 @@ namespace WebRole1.Controllers
         // GET: Kanals
         public ActionResult Index()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             CloseChannels();
             Korisnik korisnik = getKorisnik();
             var kanals = db.Kanals.Where(p => p.IdKor == korisnik.IdKor).Include(k => k.Korisnik);
@@ -46,6 +51,11 @@ namespace WebRole1.Controllers
         // GET: Kanals/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             CloseChannels();
             if (id == null)
             {
@@ -62,8 +72,13 @@ namespace WebRole1.Controllers
         // GET: Kanals/Create
         public ActionResult Create()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime");
-            ViewBag.Status = new SelectList(new List<string>{ "Na cekanju", "Otvoren", "Zatvoren" });
+            ViewBag.Status = new SelectList(new List<string> { "Na cekanju", "Otvoren", "Zatvoren" });
             return View();
         }
 
@@ -88,7 +103,7 @@ namespace WebRole1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Status = new SelectList(new List<string>{ "Na cekanju", "Otvoren", "Zatvoren" });
+            ViewBag.Status = new SelectList(new List<string> { "Na cekanju", "Otvoren", "Zatvoren" });
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", kanal.IdKor);
             return View(kanal);
         }
@@ -96,6 +111,11 @@ namespace WebRole1.Controllers
         // GET: Kanals/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             CloseChannels();
             if (id == null)
             {
@@ -131,6 +151,11 @@ namespace WebRole1.Controllers
         // GET: Kanals/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             CloseChannels();
             if (id == null)
             {
@@ -166,7 +191,7 @@ namespace WebRole1.Controllers
 
         public Korisnik getKorisnik()
         {
-            if(Session["email"] != null)
+            if (Session["email"] != null)
             {
                 string email = Session["email"].ToString();
                 Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
@@ -181,6 +206,11 @@ namespace WebRole1.Controllers
 
         public ActionResult PublishList(int id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Korisnik korisnik = getKorisnik();
             var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Where(p => p.Zakljucano == true).Include(p => p.Korisnik);
             Kanal channel = db.Kanals.Find(id);
@@ -196,7 +226,7 @@ namespace WebRole1.Controllers
         {
             Pitanje pitanje = db.Pitanjes.Find(IdPit);
             Klon klon = new Klon();
-            
+
             klon.IdPit = pitanje.IdPit;
             klon.Naslov = pitanje.Naslov;
             klon.Tekst = pitanje.Tekst;
@@ -234,12 +264,23 @@ namespace WebRole1.Controllers
 
         public ActionResult PublishedQuestions(int idKan)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             var klones = db.Klons.Where(p => p.IdKan == idKan);
+            ViewBag.IdKan = idKan;
             return View(klones.ToList());
         }
 
         public ActionResult ChannelsStudent()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "student")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             var kanals = db.Kanals.Where(p => p.Status == "Otvoren");
             ViewBag.IdKor = getKorisnik().IdKor;
             return View(kanals.ToList());
@@ -247,6 +288,11 @@ namespace WebRole1.Controllers
 
         public ActionResult Subscribe(int idKan)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "student")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
             ViewBag.E = parametri.E;
             ViewBag.ChannelName = db.Kanals.Find(idKan).Naziv;
@@ -257,11 +303,9 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubsribeConfirmation(int idKan, string Lozinka, bool Evaluation)
         {
-            //TODO nakon pretplacivanja, subscribe dugme postane disabled!
-            //TODO ??? posebna strana za mySubscriptions
             Kanal kanal = db.Kanals.Find(idKan);
             Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
-            if(Lozinka != kanal.Lozinka)
+            if (Lozinka != kanal.Lozinka)
             {
                 ModelState.AddModelError(string.Empty, "Pogresna lozinka!");
                 ViewBag.E = parametri.E;
@@ -287,6 +331,17 @@ namespace WebRole1.Controllers
             db.SaveChanges();
 
             return RedirectToAction("ChannelsStudent");
+        }
+
+        public ActionResult Answers(int IdKlo)
+        {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
+            var answers = db.Odgovors.Where(p => p.IdKlo == IdKlo).Include(p => p.Korisnik).Include(p => p.KlonPonudjeniOdg).ToList();
+            return View(answers);
         }
     }
 }

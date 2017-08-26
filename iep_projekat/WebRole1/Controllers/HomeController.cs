@@ -114,6 +114,11 @@ namespace WebRole1.Controllers
                 {
                     try
                     {
+                        if (db.Korisniks.Where(p => p.Email == korisnik.Email).FirstOrDefault() != null)
+                        {
+                            ModelState.AddModelError(string.Empty, "Email je zauzet!");
+                            return View(korisnik);
+                        }
                         PasswordHasher hasher = new PasswordHasher();
                         korisnik.Lozinka = hasher.HashPassword(korisnik.Lozinka);
                         korisnik.PotvrdaLozinke = korisnik.Lozinka;
@@ -180,6 +185,7 @@ namespace WebRole1.Controllers
             {
                 return RedirectToAction("UnauthorizedAccess");
             }
+
             using(baza db = new baza())
             {
                 var filterList = new List<string>();
@@ -189,7 +195,6 @@ namespace WebRole1.Controllers
                 ViewBag.filter = new SelectList(filterList);
 
                 var korisniks = db.Korisniks.ToList();
-
                 if (!string.IsNullOrEmpty(filter))
                 {
                     korisniks = korisniks.Where(x => x.Status == filter).ToList();
@@ -200,6 +205,11 @@ namespace WebRole1.Controllers
 
         public ActionResult Parameters()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "admin")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             return RedirectToAction("Edit", "Parametris", new { id = 1 });
         }
 
@@ -209,6 +219,7 @@ namespace WebRole1.Controllers
             {
                 return RedirectToAction("UnauthorizedAccess");
             }
+
             using (baza db = new baza())
             {
                 Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
@@ -250,6 +261,7 @@ namespace WebRole1.Controllers
             }
         }
 
+        
         public ActionResult CentiliReturn(string status)
         {
             if (Session["uloga"] == null || Session["uloga"].ToString() == "admin")
@@ -320,29 +332,38 @@ namespace WebRole1.Controllers
 
         public ActionResult Questions()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             return RedirectToAction("Index", "Pitanjes");
         }
 
         public ActionResult Channels()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             return RedirectToAction("Index", "Kanals");
         }
 
         public ActionResult Blackboard()
         {
-            //TODO da se vidi iz kog kanala je pitanje
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "student")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Korisnik korisnik = getKorisnik();
             Parametri parametri = db1.Parametris.FirstOrDefault<Parametri>();
             ViewBag.K = parametri.K;
             ViewBag.UserId = korisnik.IdKor;
-            var klones = db1.Klons.SqlQuery("select kl.* from Klon kl, Kanal ka, Prati p where kl.IdKan = ka.IdKan and p.IdKan = ka.IdKan and p.IdKor =" + korisnik.IdKor + " and kl.IdKlo not in (select IdKlo from Odgovor where IdKor =" + korisnik.IdKor + ")").ToList();
+            var klones = db1.Klons.SqlQuery("select kl.* from Klon kl, Kanal ka, Prati p where kl.IdKan = ka.IdKan and p.IdKan = ka.IdKan and p.IdKor =" + korisnik.IdKor + " and kl.IdKlo not in (select IdKlo from Odgovor where IdKor =" + korisnik.IdKor + ") order by kl.IdKlo desc").ToList();
             
             return View(klones);
-        }
-
-        public ActionResult Chat()
-        {
-            return View();
         }
     }
 }

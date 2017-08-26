@@ -7,6 +7,9 @@
 
 <h2>Published Questions</h2>
 
+@*@Html.ActionLink("Back to previous page", "PublishList", new { id=ViewBag.IdKan})*@
+<br /> <br />
+
 <table class="table">
     <tr>
        <th>
@@ -24,7 +27,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Zakljucano)
         </th>
-        @*<th></th>*@
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -56,6 +59,9 @@
                 }
                 | @Html.ActionLink("Details", "Details", new { id = item.IdPit })
             </td>*@
+            <td>
+                @Html.ActionLink("Answers", "Answers", new { IdKlo = item.IdKlo })
+            </td>
         </tr>
     }
 

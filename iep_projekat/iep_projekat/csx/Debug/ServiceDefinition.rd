@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="iep_projekat" generation="1" functional="0" release="0" Id="0bd10147-d1b3-40cf-b922-86da66f9198d" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="iep_projekat" generation="1" functional="0" release="0" Id="47c71b21-734d-4ab8-b45d-e8c1b9afbdcb" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="iep_projekatGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -70,9 +70,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="83606163-adad-4b13-8b08-ca2088470610" ref="Microsoft.RedDog.Contract\ServiceContract\iep_projekatContract@ServiceDefinition">
+    <implementation Id="e3f13ba0-16f6-4003-9802-5de3c84b7e48" ref="Microsoft.RedDog.Contract\ServiceContract\iep_projekatContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="e6ba67f9-7839-4020-b05c-eb1a4226aba4" ref="Microsoft.RedDog.Contract\Interface\WebRole1:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="a10d6222-9a18-4f05-9200-b467d3c732d3" ref="Microsoft.RedDog.Contract\Interface\WebRole1:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/iep_projekat/iep_projekatGroup/WebRole1:Endpoint1" />
           </inPort>

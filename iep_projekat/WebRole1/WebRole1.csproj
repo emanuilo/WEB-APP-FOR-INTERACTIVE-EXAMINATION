@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KanalsController.cs" />
+    <Compile Include="Controllers\KlonsController.cs" />
     <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\NarudzbinasController.cs" />
     <Compile Include="Controllers\ParametrisController.cs" />
@@ -206,7 +207,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\PushHub.cs" />
     <Compile Include="Hubs\Startup.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -306,6 +306,17 @@
     <Content Include="Views\Kanals\Subscribe.cshtml" />
     <Content Include="Views\Home\Blackboard.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Klons\Create.cshtml" />
+    <Content Include="Views\Klons\Delete.cshtml" />
+    <Content Include="Views\Klons\Details.cshtml" />
+    <Content Include="Views\Klons\Edit.cshtml" />
+    <Content Include="Views\Klons\Index.cshtml" />
+    <Content Include="Views\Klons\Success.cshtml" />
+    <Content Include="Views\Klons\Wrong.cshtml" />
+    <Content Include="Views\Klons\Correct.cshtml" />
+    <Content Include="Views\Kanals\Answers.cshtml" />
+    <Content Include="Views\Klons\History.cshtml" />
+    <Content Include="Views\Klons\HistoryDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

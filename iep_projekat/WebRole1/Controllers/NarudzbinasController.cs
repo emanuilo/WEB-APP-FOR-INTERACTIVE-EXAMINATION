@@ -17,6 +17,11 @@ namespace WebRole1.Controllers
         // GET: Narudzbinas
         public ActionResult Index()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() == "admin")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             string email = Session["email"].ToString();
             Korisnik korisnik = db.Korisniks.Where(a => a.Email.Equals(email)).FirstOrDefault<Korisnik>();
             int idKor = korisnik.IdKor;

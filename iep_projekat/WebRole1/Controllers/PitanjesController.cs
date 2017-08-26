@@ -32,6 +32,11 @@ namespace WebRole1.Controllers
         // GET: Pitanjes
         public ActionResult Index()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Korisnik korisnik = getKorisnik();
             var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Include(p => p.Korisnik);
             return View(pitanjes.ToList());
@@ -40,6 +45,11 @@ namespace WebRole1.Controllers
         // GET: Pitanjes/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -56,6 +66,11 @@ namespace WebRole1.Controllers
         // GET: Pitanjes/Create
         public ActionResult Create()
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
             ViewBag.K = parametri.K;
             ViewBag.IdKan = new SelectList(db.Kanals, "IdKan", "Naziv");
@@ -70,6 +85,7 @@ namespace WebRole1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pitanje pitanje)
         {
+            ViewBag.K = db.Parametris.FirstOrDefault().K;
             if (ModelState.IsValid)
             {
                 Korisnik korisnik = getKorisnik();
@@ -90,6 +106,11 @@ namespace WebRole1.Controllers
                 for(int i = 0; i < K; i++)
                 {
                     string tekstPonudjenog = Request["ponudjeno" + i].ToString();
+                    if (tekstPonudjenog == "")
+                    {
+                        ModelState.AddModelError(string.Empty, "Uneti ponudjene odgovore");
+                        return View(pitanje);
+                    }
                     PonudjeniOdg ponudjeni = new PonudjeniOdg();
                     ponudjeni.IdPit = pitanje.IdPit;
                     ponudjeni.Sadrzaj = tekstPonudjenog;
@@ -111,6 +132,11 @@ namespace WebRole1.Controllers
         // GET: Pitanjes/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -125,7 +151,7 @@ namespace WebRole1.Controllers
                 return RedirectToAction("UnlockQuestion", new { id = id });
             }
             ViewBag.IdKor = new SelectList(db.Korisniks, "IdKor", "Ime", pitanje.IdKor);
-            //TODO edit ponudjenih odgovora
+            ViewBag.K = db.Parametris.FirstOrDefault().K;
             return View(pitanje);
         }
 
@@ -134,14 +160,33 @@ namespace WebRole1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPit,IdKor,Naslov,Tekst,VrPravljenja,VrPoslZaklj,Zakljucano")] Pitanje pitanje)
+        public ActionResult Edit(Pitanje pitanje)
         {
             if (ModelState.IsValid)
             {
-                if(pitanje.Zakljucano == true)
+                ViewBag.K = db.Parametris.FirstOrDefault().K;
+                if (pitanje.Zakljucano == true)
                 {
                     pitanje.VrPoslZaklj = DateTime.Now;
                 }
+
+                int K = (int)db.Parametris.FirstOrDefault<Parametri>().K;
+                int tacanOdgovor = Convert.ToInt32(Request["radioPonudjeno"]);
+                for (int i = 0; i < K; i++)
+                {
+                    string tekstPonudjenog = Request["ponudjeno" + i].ToString();
+                    if(tekstPonudjenog == "") {
+                        ModelState.AddModelError(string.Empty, "Uneti ponudjene odgovore");
+                        pitanje.PonudjeniOdgs = db.PonudjeniOdgs.Where(p => p.IdPit == pitanje.IdPit).ToList();
+                        return View(pitanje);
+                    }
+                    PonudjeniOdg ponudjeni = db.PonudjeniOdgs.Where(p => p.IdPit == pitanje.IdPit).Where(p => p.RedniBr == i).FirstOrDefault();
+                    ponudjeni.Sadrzaj = tekstPonudjenog;
+                    ponudjeni.Tacan = (i == tacanOdgovor ? true : false);
+
+                    db.Entry(ponudjeni).State = EntityState.Modified;
+                }
+
                 db.Entry(pitanje).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -153,6 +198,11 @@ namespace WebRole1.Controllers
         // GET: Pitanjes/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -187,6 +237,11 @@ namespace WebRole1.Controllers
 
         public ActionResult UnlockQuestion(int id)
         {
+            if (Session["uloga"] == null || Session["uloga"].ToString() != "profesor")
+            {
+                return RedirectToAction("UnauthorizedAccess");
+            }
+
             Parametri parametri = db.Parametris.FirstOrDefault<Parametri>();
             Pitanje pitanje = db.Pitanjes.Find(id);
             ViewBag.M = parametri.M;

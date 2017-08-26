@@ -75,6 +75,9 @@ namespace WebRole1.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Status = new SelectList(new List<string> { "aktivan", "neaktivan"}, korisnik.Status);
+            ViewBag.Uloga = new SelectList(new List<string> { "student", "profesor" }, korisnik.Uloga);
+
             return View(korisnik);
         }
 
