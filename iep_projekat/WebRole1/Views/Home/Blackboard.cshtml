@@ -89,7 +89,7 @@
                 push.server.joinGroup($('#IdKor').val());
             });
             //$.connection.hub.start();
-            push.client.addNewQuestion = function (naslov, tekst, ponudjeni, idPit) {
+            push.client.addNewQuestion = function (naslov, tekst, ponudjeni, idPit, kanal) {
                 // Add the message to the page.
                 ponudjeni = ponudjeni.substring(0, ponudjeni.length - 1);
                 var odgovori = ponudjeni.split(";");
@@ -97,8 +97,8 @@
                 for (var i in odgovori) {
                     htmlOdgovori += "<li> " + odgovori[i] + "</li>";
                 }
-                $('#boxes').prepend('<div class="col-md-4" style="padding: 0px"> <div class="box" id="pit_' + idPit + '" onclick="dodato('+idPit+')"> <h4>' + htmlEncode(naslov) + '</h4> <br/> <p>' + htmlEncode(tekst) + '</p><div class="ponudjeni" ><ol>' + htmlOdgovori + '</ol></div></div></div>');
-                
+                $('#boxes').prepend('<div class="col-md-4" style="padding: 0px"> <div class="box" id="pit_' + idPit + '" onclick="dodato('+idPit+')"> <h4>' + htmlEncode(naslov) + '</h4> <br/> <p>' + htmlEncode(tekst) + '</p><div class="ponudjeni" ><ol>' + htmlOdgovori + '</ol></div><div class="footer">'+kanal+'</div></div></div>');
+
             };
 
         });
@@ -118,7 +118,7 @@
         //$('[id^="pit"').click(function (event) {
         //    var id = event.currentTarget.id.toString();
         //    id = id.substring(4, id.length);
-        //    window.location.href = '/Klons/Details/' + id; 
+        //    window.location.href = '/Klons/Details/' + id;
 
         //});
         function dodato(idPit) {

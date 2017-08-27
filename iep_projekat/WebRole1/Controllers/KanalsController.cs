@@ -211,6 +211,8 @@ namespace WebRole1.Controllers
                 return RedirectToAction("UnauthorizedAccess");
             }
 
+            CloseChannels();
+
             Korisnik korisnik = getKorisnik();
             var pitanjes = db.Pitanjes.Where(p => p.IdKor == korisnik.IdKor).Where(p => p.Zakljucano == true).Include(p => p.Korisnik);
             Kanal channel = db.Kanals.Find(id);
@@ -225,6 +227,7 @@ namespace WebRole1.Controllers
         public ActionResult Publish(int id, int? IdPit)
         {
             Pitanje pitanje = db.Pitanjes.Find(IdPit);
+            Kanal kanal = db.Kanals.Find(id);
             Klon klon = new Klon();
 
             klon.IdPit = pitanje.IdPit;
@@ -257,7 +260,7 @@ namespace WebRole1.Controllers
 
             //SignalR
             var context = GlobalHost.ConnectionManager.GetHubContext<PushHub>();
-            context.Clients.Group("Channel " + id).addNewQuestion(klon.Naslov, klon.Tekst, stringPonudjeni, klon.IdKlo);
+            context.Clients.Group("Channel " + id).addNewQuestion(klon.Naslov, klon.Tekst, stringPonudjeni, klon.IdKlo, kanal.Naziv);
 
             return RedirectToAction("PublishList");
         }
@@ -268,6 +271,8 @@ namespace WebRole1.Controllers
             {
                 return RedirectToAction("UnauthorizedAccess");
             }
+
+            CloseChannels();
 
             var klones = db.Klons.Where(p => p.IdKan == idKan);
             ViewBag.IdKan = idKan;
@@ -280,6 +285,8 @@ namespace WebRole1.Controllers
             {
                 return RedirectToAction("UnauthorizedAccess");
             }
+
+            CloseChannels();
 
             var kanals = db.Kanals.Where(p => p.Status == "Otvoren");
             ViewBag.IdKor = getKorisnik().IdKor;
