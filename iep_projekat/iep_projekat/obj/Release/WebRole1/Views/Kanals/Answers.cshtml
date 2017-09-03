@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WebRole1.Models.Odgovor>
+
+@{
+    ViewBag.Title = "Answers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Answers</h2>
+
+@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })
+<br/> <br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Korisnik.Ime)
+            @*@Html.DisplayNameFor(model => model.Kanal.Naziv)*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrSlanja)
+            @*@Html.DisplayNameFor(model => model.Klon.Naslov)*@
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KlonPonudjeniOdg.RedniBr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KlonPonudjeniOdg.Sadrzaj)
+        </th>
+        @*<th>
+
+        </th>
+        <th></th>*@
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr @if (item.KlonPonudjeniOdg.Tacan) { <text>style="background-color: lightgreen"</text> }else{ <text>style="background-color: lightcoral"</text>}>
+            <td>
+                @Html.DisplayFor(modelItem => item.Korisnik.Ime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrSlanja)
+            </td>
+            <td>
+                @(item.KlonPonudjeniOdg.RedniBr+1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KlonPonudjeniOdg.Sadrzaj)
+            </td>
+            @*<td>
+        @Html.DisplayFor(modelItem => item.VrSlanja)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>*@
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,120 @@
+﻿@model WebRole1.Models.Klon
+
+@{
+    ViewBag.Title = "Correct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Correct!</h2>
+
+<br />
+<h4>Channel: @Model.Kanal.Naziv</h4>
+
+<div class="row" id="boxes">
+
+    <div class="col-md-8" style="padding: 0px" id="question">
+        <div class="box">
+            <h2>
+                @Html.DisplayFor(model => model.Naslov)
+            </h2>
+            <br />
+            <p>
+                @Html.DisplayFor(model => model.Tekst)
+            </p>
+            @if (Model.Slika != null)
+            {
+                <div class="image" align="center">
+                    @HtmlHelpers.ShowImage(Model.Slika)
+                </div>
+            }
+            <div class="ponudjeni">
+                <ul>
+                    @for (int i = 0; i < Convert.ToInt32(ViewBag.K); i++)
+                    {
+                        if(ViewBag.Answer == i)
+                        {
+                            <li style="background-color: lightgreen">
+                                @(i + 1))
+                                @Model.KlonPonudjeniOdgs.Where(p => p.RedniBr == i).FirstOrDefault().Sadrzaj
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                @(i + 1))
+                                @Model.KlonPonudjeniOdgs.Where(p => p.RedniBr == i).FirstOrDefault().Sadrzaj
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    @*@if (Model.Slika != null)
+    {
+        <div class="col-md-4">
+            <div class="box">
+                @HtmlHelpers.ShowImage(Model.Slika);
+            </div>
+        </div>
+    }*@
+
+</div>
+
+<br />
+
+@Html.ActionLink("Back to the Blackboard", "Blackboard", "Home")
+
+<style media="screen" type="text/css">
+    .box p {
+        word-wrap: break-word;
+        font-size: 18px;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .box h2 {
+        text-align: center;
+        font-weight: bold;
+        padding-bottom: 25px;
+    }
+
+    .box {
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        border: 3px solid lightgreen;
+        border-radius: 16px;
+        min-height: 400px;
+        margin: 2px;
+    }
+
+    .ponudjeni {
+        padding-top: 25px;
+        /*padding-left: 40px;
+        padding-right: 30px;*/
+        font-size: 15px;
+        word-wrap: break-word;
+    }
+
+    #question {
+        margin: auto;
+    }
+
+    .ponudjeni ul {
+        padding-left: 70px;
+        padding-bottom: 20px;
+        list-style-type: none;
+    }
+
+    .ponudjeni li {
+        padding-bottom: 10px;
+        padding-right: 25px;
+        /*vertical-align: middle;*/
+    }
+
+    input[type="radio"] {
+        margin-top: 1px;
+    }
+</style>

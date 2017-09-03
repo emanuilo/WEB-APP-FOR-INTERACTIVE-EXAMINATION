@@ -19,6 +19,7 @@
     </Sites>
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="APPINSIGHTS_INSTRUMENTATIONKEY" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
@@ -27,12 +28,6 @@
       <Content destination=".\">
         <SourceDirectory path="E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\rcf\Debug\WebRole1Content\" />
       </Content>
-      <Content destination=".\">
-        <SourceDirectory path="E:\Faks\III\III-2-IEP\Projekat\iep_projekat\iep_projekat\ecf\WebRole1Content\" />
-      </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WebRole>
 </ServiceDefinition>

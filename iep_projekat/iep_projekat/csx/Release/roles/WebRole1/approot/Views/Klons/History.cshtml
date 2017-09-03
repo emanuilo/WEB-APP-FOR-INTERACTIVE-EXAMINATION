@@ -1,0 +1,58 @@
+﻿@model IEnumerable<WebRole1.Models.Klon>
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>History</h2>
+<br />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Kanal.IdKan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kanal.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Tekst)
+        </th>*@
+        <th>
+            @*@Html.DisplayNameFor(model => model.Odgovors.Where(p => p.IdKlo == model.IdKlo).Where(p => p.IdKor == ViewBag.IdKor).FirstOrDefault().VrSlanja)*@
+            Vreme odgovora
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kanal.IdKan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kanal.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naslov)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Tekst)
+            </td>*@
+            <td>
+                @*@Html.DisplayFor(modelItem => item.VrPravljenja)*@
+                @{ int id = ViewBag.IdKor;}
+                @Html.DisplayFor(modelItem => item.Odgovors.Where(p => p.IdKlo == item.IdKlo).Where(p => p.IdKor == id).FirstOrDefault().VrSlanja)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "HistoryDetails", new { id = item.IdKlo }) 
+            </td>
+        </tr>
+    }
+
+</table>

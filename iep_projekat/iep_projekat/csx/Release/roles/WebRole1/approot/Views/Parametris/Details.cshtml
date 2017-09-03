@@ -1,0 +1,67 @@
+﻿@model WebRole1.Models.Parametri
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Parametri</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.K)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.K)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.M)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.M)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.E)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.E)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.S)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.S)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.G)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.G)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.P)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.P)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPar }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

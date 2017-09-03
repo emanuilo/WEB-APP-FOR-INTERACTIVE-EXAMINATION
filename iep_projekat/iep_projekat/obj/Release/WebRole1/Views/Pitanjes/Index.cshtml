@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebRole1.Models.Pitanje>
+
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Questions</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Kanal.Naziv)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.IdPit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Tekst)
+            </th>*@
+        @*<th>
+                @Html.DisplayNameFor(model => model.Slika)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.VrPravljenja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrPoslZaklj)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zakljucano)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Kanal.Naziv)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naslov)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Tekst)
+                </td>
+                <td>
+                    @if (item.Slika != null)
+                    {
+                        @HtmlHelpers.ShowImage(item.Slika);
+                    }
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.VrPravljenja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrPoslZaklj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zakljucano)
+            </td>
+            <td>
+                @if (item.Zakljucano == true)
+                {
+                    @Html.ActionLink("Unlock", "Edit", new { id = item.IdPit })
+                }
+                else
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdPit })
+                }
+                | @Html.ActionLink("Details", "Details", new { id = item.IdPit })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -257,7 +257,7 @@ namespace WebRole1.Controllers
                 db.Narudzbinas.Add(narudzbina);
                 db.SaveChanges();
 
-                return Redirect("http://stage.centili.com/payment/widget?apikey=7a6ac8db85d69ee617967f6b11548879&returnurl=localhost:52051/Home/CentiliReturn/");
+                return Redirect("http://stage.centili.com/payment/widget?apikey=7a6ac8db85d69ee617967f6b11548879&returnurl=iep_projekat.cloudapp.net/Home/CentiliReturn/?status=success");
             }
         }
 

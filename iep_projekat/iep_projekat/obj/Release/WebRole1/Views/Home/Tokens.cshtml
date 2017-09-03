@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Tokens";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tokens</h2>
+
+<h4>Trenutno stanje tokena: <font size="10"><b>&nbsp;@ViewBag.tokens</b></font></h4>
+
+<br/>
+
+<h4>Dopuni se jednim od paketa: </h4>
+<br />
+<div class="row">
+    <div class="col-md-2">
+        <form action=@ViewBag.link >
+            <input type="button" value="SILVER @ViewBag.silver" class="btn btn-default" onclick="window.location.href='/Home/Order?numOfTokens=@ViewBag.silver'"/>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <input type="button" value="GOLD @ViewBag.gold" class="btn btn-default" onclick="window.location.href='/Home/Order?numOfTokens=@ViewBag.gold'"/>
+    </div>
+    <div class="col-md-2">
+        <input type="button" value="PLATIN @ViewBag.platin" class="btn btn-default" onclick="window.location.href='/Home/Order?numOfTokens=@ViewBag.platin'"/>
+    </div>
+</div>
+
+<br /><br />
+@Html.ActionLink("Prethodne narudzbine", "Index", "Narudzbinas")

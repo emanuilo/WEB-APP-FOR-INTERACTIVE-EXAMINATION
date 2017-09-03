@@ -1,0 +1,248 @@
+
+CREATE TYPE [ID]
+	FROM INTEGER NOT NULL
+go
+
+CREATE TABLE [Kanal]
+( 
+	[IdKan]              [ID]  IDENTITY ( 1,1 ) ,
+	[Naziv]              varchar(50)  NOT NULL ,
+	[VrOtvaranja]        datetime  NOT NULL ,
+	[Lozinka]            varchar(50)  NOT NULL ,
+	[Status]             varchar(30)  NULL ,
+	[VrOgranicen]        bit  NULL ,
+	[IntervalTrajanja]   integer  NULL ,
+	[IdKor]              [ID] ,
+	[VrZatvaranja]       datetime  NULL 
+)
+go
+
+ALTER TABLE [Kanal]
+	ADD CONSTRAINT [XPKKanal] PRIMARY KEY  CLUSTERED ([IdKan] ASC)
+go
+
+CREATE TABLE [Klon]
+( 
+	[Naslov]             varchar(80)  NOT NULL ,
+	[Tekst]              text  NULL ,
+	[Slika]              varbinary(max)  NULL ,
+	[VrPravljenja]       datetime  NULL ,
+	[VrPoslZaklj]        datetime  NULL ,
+	[Zakljucano]         bit  NOT NULL ,
+	[IdPit]              [ID] ,
+	[IdKlo]              [ID]  IDENTITY ( 1,1 ) ,
+	[IdKan]              [ID]  NULL 
+)
+go
+
+ALTER TABLE [Klon]
+	ADD CONSTRAINT [XPKKlon] PRIMARY KEY  CLUSTERED ([IdKlo] ASC)
+go
+
+CREATE TABLE [KlonPonudjeniOdg]
+( 
+	[IdKPO]              [ID]  IDENTITY ( 1,1 ) ,
+	[Sadrzaj]            varchar(200)  NOT NULL ,
+	[RedniBr]            integer  NOT NULL ,
+	[Tacan]              bit  NOT NULL ,
+	[IdKlo]              [ID] 
+)
+go
+
+ALTER TABLE [KlonPonudjeniOdg]
+	ADD CONSTRAINT [XPKKlonPonudjeniOdg] PRIMARY KEY  CLUSTERED ([IdKPO] ASC)
+go
+
+CREATE TABLE [Korisnik]
+( 
+	[IdKor]              [ID]  IDENTITY ( 1,1 ) ,
+	[Ime]                varchar(50)  NOT NULL ,
+	[Prezime]            varchar(50)  NOT NULL ,
+	[Email]              varchar(80)  NOT NULL ,
+	[Lozinka]            varchar(150)  NOT NULL ,
+	[BrTokena]           integer  NULL 
+	CONSTRAINT [BrTokena_445473142]
+		 DEFAULT  0,
+	[Status]             varchar(50)  NULL 
+	CONSTRAINT [Default_Value_323_603836955]
+		 DEFAULT  'Neaktivan',
+	[Uloga]              varchar(50)  NULL 
+)
+go
+
+ALTER TABLE [Korisnik]
+	ADD CONSTRAINT [XPKKorisnik] PRIMARY KEY  CLUSTERED ([IdKor] ASC)
+go
+
+CREATE TABLE [Narudzbina]
+( 
+	[IdNar]              [ID]  IDENTITY ( 1,1 ) ,
+	[BrTokena]           integer  NOT NULL ,
+	[Cena]               integer  NOT NULL ,
+	[Status]             varchar(50)  NOT NULL ,
+	[IdKor]              [ID] 
+)
+go
+
+ALTER TABLE [Narudzbina]
+	ADD CONSTRAINT [XPKNarudzbina] PRIMARY KEY  CLUSTERED ([IdNar] ASC)
+go
+
+CREATE TABLE [Odgovor]
+( 
+	[VrSlanja]           datetime  NULL ,
+	[IdKan]              [ID] ,
+	[IdKlo]              [ID] ,
+	[IdKor]              [ID] ,
+	[IdKPO]              [ID] 
+)
+go
+
+ALTER TABLE [Odgovor]
+	ADD CONSTRAINT [XPKOdgovor] PRIMARY KEY  CLUSTERED ([IdKlo] ASC,[IdKor] ASC)
+go
+
+CREATE TABLE [Parametri]
+( 
+	[IdPar]              [ID]  IDENTITY ( 1,1 ) ,
+	[K]                  integer  NULL ,
+	[M]                  integer  NULL ,
+	[E]                  integer  NULL ,
+	[S]                  integer  NULL ,
+	[G]                  integer  NULL ,
+	[P]                  integer  NULL 
+)
+go
+
+ALTER TABLE [Parametri]
+	ADD CONSTRAINT [XPKParametri] PRIMARY KEY  CLUSTERED ([IdPar] ASC)
+go
+
+CREATE TABLE [Pitanje]
+( 
+	[IdPit]              [ID]  IDENTITY ( 1,1 ) ,
+	[Naslov]             varchar(80)  NULL ,
+	[Tekst]              text  NOT NULL ,
+	[Slika]              varbinary(max)  NULL ,
+	[VrPravljenja]       datetime  NOT NULL ,
+	[VrPoslZaklj]        datetime  NULL ,
+	[Zakljucano]         bit  NOT NULL ,
+	[IdKor]              [ID] 
+)
+go
+
+ALTER TABLE [Pitanje]
+	ADD CONSTRAINT [XPKPitanje] PRIMARY KEY  CLUSTERED ([IdPit] ASC)
+go
+
+CREATE TABLE [PonudjeniOdg]
+( 
+	[IdPit]              [ID] ,
+	[IdPon]              [ID]  IDENTITY ( 1,1 ) ,
+	[Sadrzaj]            varchar(200)  NOT NULL ,
+	[RedniBr]            integer  NOT NULL ,
+	[Tacan]              bit  NOT NULL 
+)
+go
+
+ALTER TABLE [PonudjeniOdg]
+	ADD CONSTRAINT [XPKPonudjeniOdg] PRIMARY KEY  CLUSTERED ([IdPon] ASC)
+go
+
+CREATE TABLE [Prati]
+( 
+	[IdKor]              [ID] ,
+	[IdKan]              [ID] ,
+	[Evaluacija]         bit  NOT NULL 
+)
+go
+
+ALTER TABLE [Prati]
+	ADD CONSTRAINT [XPKPrati] PRIMARY KEY  CLUSTERED ([IdKor] ASC,[IdKan] ASC)
+go
+
+
+ALTER TABLE [Kanal]
+	ADD CONSTRAINT [R_12] FOREIGN KEY ([IdKor]) REFERENCES [Korisnik]([IdKor])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Klon]
+	ADD CONSTRAINT [R_21] FOREIGN KEY ([IdPit]) REFERENCES [Pitanje]([IdPit])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Klon]
+	ADD CONSTRAINT [R_23] FOREIGN KEY ([IdKan]) REFERENCES [Kanal]([IdKan])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [KlonPonudjeniOdg]
+	ADD CONSTRAINT [R_35] FOREIGN KEY ([IdKlo]) REFERENCES [Klon]([IdKlo])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Narudzbina]
+	ADD CONSTRAINT [R_15] FOREIGN KEY ([IdKor]) REFERENCES [Korisnik]([IdKor])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Odgovor]
+	ADD CONSTRAINT [R_29] FOREIGN KEY ([IdKan]) REFERENCES [Kanal]([IdKan])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Odgovor]
+	ADD CONSTRAINT [R_31] FOREIGN KEY ([IdKlo]) REFERENCES [Klon]([IdKlo])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Odgovor]
+	ADD CONSTRAINT [R_32] FOREIGN KEY ([IdKor]) REFERENCES [Korisnik]([IdKor])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Odgovor]
+	ADD CONSTRAINT [R_36] FOREIGN KEY ([IdKPO]) REFERENCES [KlonPonudjeniOdg]([IdKPO])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Pitanje]
+	ADD CONSTRAINT [R_8] FOREIGN KEY ([IdKor]) REFERENCES [Korisnik]([IdKor])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [PonudjeniOdg]
+	ADD CONSTRAINT [R_7] FOREIGN KEY ([IdPit]) REFERENCES [Pitanje]([IdPit])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Prati]
+	ADD CONSTRAINT [R_18] FOREIGN KEY ([IdKor]) REFERENCES [Korisnik]([IdKor])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Prati]
+	ADD CONSTRAINT [R_19] FOREIGN KEY ([IdKan]) REFERENCES [Kanal]([IdKan])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go

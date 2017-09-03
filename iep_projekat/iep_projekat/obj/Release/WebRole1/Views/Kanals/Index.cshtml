@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebRole1.Models.Kanal>
+
+@{
+    ViewBag.Title = "Channels";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Channels</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdKan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrOtvaranja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrZatvaranja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Broj Prijavljenih
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdKan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrOtvaranja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrZatvaranja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pratis.Count)
+        </td>
+        <td>
+            @if(item.Status == "Zatvoren")
+            {
+                @Html.DisplayName("Edit")
+            }
+            else
+            {
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdKan })
+            }
+             | @Html.ActionLink("Details", "Details", new { id = item.IdKan }) |
+            @Html.ActionLink("Publishing", "PublishList", new { id=item.IdKan })
+        </td>
+    </tr>
+}
+
+</table>

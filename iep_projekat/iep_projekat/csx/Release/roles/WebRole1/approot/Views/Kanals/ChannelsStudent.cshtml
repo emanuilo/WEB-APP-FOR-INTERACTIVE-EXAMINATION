@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebRole1.Models.Kanal>
+
+@{
+    ViewBag.Title = "Channels";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Channels</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdKan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrOtvaranja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrZatvaranja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Broj Prijavljenih
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdKan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrOtvaranja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrZatvaranja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pratis.Count)
+            </td>
+            <td>
+                <input id="IdPit" name="IdPit" type="hidden" value=@item.IdKan />
+                @{ int idK = item.IdKan;}
+                @if (item.Pratis.Where(p => p.IdKor == ViewBag.IdKor).Count() == 1)
+                {
+                    <input type="button" value="Subscribed" class="btn btn-default" onclick="window.location.href='/Kanals/Subscribe?idKan=@item.IdKan'" disabled="disabled"/>
+                }
+                else
+                {
+                    <input type="button" value="Subscribe" class="btn btn-default" onclick="window.location.href='/Kanals/Subscribe?idKan=@item.IdKan'" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebRole1.Models.Parametri>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.K)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.M)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.E)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.S)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.G)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.P)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.K)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.M)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.E)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.S)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.G)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.P)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPar }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPar }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPar })
+        </td>
+    </tr>
+}
+
+</table>

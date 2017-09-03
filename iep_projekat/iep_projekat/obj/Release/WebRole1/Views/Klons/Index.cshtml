@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebRole1.Models.Klon>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Kanal.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pitanje.Naslov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naslov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tekst)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Slika)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrPravljenja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VrPoslZaklj)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zakljucano)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kanal.Naziv)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pitanje.Naslov)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naslov)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tekst)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Slika)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrPravljenja)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VrPoslZaklj)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zakljucano)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdKlo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdKlo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdKlo })
+        </td>
+    </tr>
+}
+
+</table>
